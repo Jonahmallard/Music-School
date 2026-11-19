@@ -5,7 +5,7 @@
 # hardcoded key from the git history). PORT is set automatically by Render.
 services:
   - type: web
-    name: music-school-0808
+    name: music-school
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
