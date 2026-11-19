@@ -1,0 +1,19 @@
+# Render Blueprint for the Music School demo (free tier).
+# Django 3.1.2 requires Python 3.9 — pinned below. Postgres comes from a
+# Neon free database; its URL goes in DATABASE_URL in the Render dashboard,
+# along with a fresh SECRET_KEY (generate one — never reuse the old
+# hardcoded key from the git history). PORT is set automatically by Render.
+services:
+  - type: web
+    name: music-school-0808
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    startCommand: gunicorn musicschool0808.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.18
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
